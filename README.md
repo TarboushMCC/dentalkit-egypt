@@ -2,7 +2,7 @@
 
 Egypt's first specialized e-commerce platform for dental students — buy the exact equipment package your university and academic year require, in one order.
 
-> **Note:** This repository currently contains documentation only. The source code will be published at a later date.
+> **Note:** This repository currently contains documentation only. The source code will be published at a later date. Passion project — a full product build, not an operating business.
 
 ## What it is
 
