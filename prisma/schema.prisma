@@ -1,0 +1,466 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ─── Auth ────────────────────────────────────────────────────────────────────
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String    @unique
+  emailVerified DateTime?
+  image         String?
+  password      String?
+  role          UserRole  @default(STUDENT)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  studentProfile StudentProfile?
+  accounts       Account[]
+  sessions       Session[]
+  orders         Order[]
+  wishlist       WishlistItem[]
+  reviews        Review[]
+  cart           CartItem[]
+
+  @@index([email])
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+enum UserRole {
+  STUDENT
+  ADMIN
+  SUPER_ADMIN
+}
+
+// ─── Student Profile ─────────────────────────────────────────────────────────
+
+model StudentProfile {
+  id           String  @id @default(cuid())
+  userId       String  @unique
+  universityId String?
+  yearId       String?
+  studentId    String?
+  phone        String?
+  address      String?
+  city         String?
+  governorate  String?
+
+  user       User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  university University?   @relation(fields: [universityId], references: [id])
+  year       AcademicYear? @relation(fields: [yearId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// ─── Universities & Academic Years ───────────────────────────────────────────
+
+model University {
+  id          String  @id @default(cuid())
+  name        String
+  nameAr      String?
+  slug        String  @unique
+  logo        String?
+  description String?
+  location    String?
+  website     String?
+  isActive    Boolean @default(true)
+  sortOrder   Int     @default(0)
+
+  academicYears   AcademicYear[]
+  packages        Package[]
+  studentProfiles StudentProfile[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([slug])
+  @@index([isActive])
+}
+
+model AcademicYear {
+  id           String  @id @default(cuid())
+  universityId String
+  name         String
+  nameAr       String?
+  slug         String
+  yearNumber   Int
+  description  String?
+  isActive     Boolean @default(true)
+  sortOrder    Int     @default(0)
+
+  university      University      @relation(fields: [universityId], references: [id], onDelete: Cascade)
+  packages        Package[]
+  studentProfiles StudentProfile[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([universityId, slug])
+  @@index([universityId])
+}
+
+// ─── Products ─────────────────────────────────────────────────────────────────
+
+model Category {
+  id          String  @id @default(cuid())
+  name        String
+  nameAr      String?
+  slug        String  @unique
+  description String?
+  image       String?
+  sortOrder   Int     @default(0)
+  isActive    Boolean @default(true)
+
+  products Product[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Product {
+  id            String   @id @default(cuid())
+  name          String
+  nameAr        String?
+  slug          String   @unique
+  sku           String   @unique
+  description   String?
+  descriptionAr String?
+  categoryId    String?
+  price         Decimal  @db.Decimal(10, 2)
+  comparePrice  Decimal? @db.Decimal(10, 2)
+  costPrice     Decimal? @db.Decimal(10, 2)
+  stock         Int      @default(0)
+  lowStockAlert Int      @default(5)
+  weight        Decimal? @db.Decimal(8, 2)
+  isActive      Boolean  @default(true)
+  isFeatured    Boolean  @default(false)
+  images        String[]
+  tags          String[]
+
+  category     Category?      @relation(fields: [categoryId], references: [id])
+  packageItems PackageItem[]
+  cartItems    CartItem[]
+  orderItems   OrderItem[]
+  wishlist     WishlistItem[]
+  reviews      Review[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([slug])
+  @@index([categoryId])
+  @@index([isActive])
+}
+
+// ─── Packages ─────────────────────────────────────────────────────────────────
+
+model Package {
+  id            String   @id @default(cuid())
+  name          String
+  nameAr        String?
+  slug          String   @unique
+  description   String?
+  descriptionAr String?
+  universityId  String
+  yearId        String
+  price         Decimal  @db.Decimal(10, 2)
+  comparePrice  Decimal? @db.Decimal(10, 2)
+  stock         Int      @default(0)
+  lowStockAlert Int      @default(5)
+  isActive      Boolean  @default(true)
+  isFeatured    Boolean  @default(false)
+  isRequired    Boolean  @default(false)
+  images        String[]
+  tags          String[]
+  sortOrder     Int      @default(0)
+
+  university University   @relation(fields: [universityId], references: [id])
+  year       AcademicYear @relation(fields: [yearId], references: [id])
+  items      PackageItem[]
+  cartItems  CartItem[]
+  orderItems OrderItem[]
+  wishlist   WishlistItem[]
+  reviews    Review[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([slug])
+  @@index([universityId])
+  @@index([yearId])
+  @@index([isActive])
+}
+
+model PackageItem {
+  id        String  @id @default(cuid())
+  packageId String
+  productId String
+  quantity  Int     @default(1)
+  sortOrder Int     @default(0)
+  note      String?
+
+  package Package @relation(fields: [packageId], references: [id], onDelete: Cascade)
+  product Product @relation(fields: [productId], references: [id])
+
+  @@unique([packageId, productId])
+}
+
+// ─── Cart ─────────────────────────────────────────────────────────────────────
+
+model CartItem {
+  id        String  @id @default(cuid())
+  userId    String
+  productId String?
+  packageId String?
+  quantity  Int     @default(1)
+
+  user    User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  product Product? @relation(fields: [productId], references: [id])
+  package Package? @relation(fields: [packageId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
+}
+
+// ─── Orders ───────────────────────────────────────────────────────────────────
+
+model Order {
+  id            String        @id @default(cuid())
+  orderNumber   String        @unique
+  userId        String
+  status        OrderStatus   @default(PENDING)
+  paymentStatus PaymentStatus @default(UNPAID)
+  paymentMethod String?
+  paymentRef    String?
+  subtotal      Decimal       @db.Decimal(10, 2)
+  discount      Decimal       @default(0) @db.Decimal(10, 2)
+  shipping      Decimal       @default(0) @db.Decimal(10, 2)
+  total         Decimal       @db.Decimal(10, 2)
+  couponCode    String?
+  notes         String?
+
+  shippingName    String?
+  shippingPhone   String?
+  shippingAddress String?
+  shippingCity    String?
+  shippingGov     String?
+
+  user       User             @relation(fields: [userId], references: [id])
+  items      OrderItem[]
+  statusLogs OrderStatusLog[]
+  payment    Payment?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
+  @@index([orderNumber])
+  @@index([status])
+  @@index([paymentStatus])
+}
+
+model OrderItem {
+  id        String  @id @default(cuid())
+  orderId   String
+  productId String?
+  packageId String?
+  name      String
+  quantity  Int
+  price     Decimal @db.Decimal(10, 2)
+  total     Decimal @db.Decimal(10, 2)
+
+  order   Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  product Product? @relation(fields: [productId], references: [id])
+  package Package? @relation(fields: [packageId], references: [id])
+
+  @@index([orderId])
+}
+
+model OrderStatusLog {
+  id      String      @id @default(cuid())
+  orderId String
+  status  OrderStatus
+  note    String?
+
+  order Order @relation(fields: [orderId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+}
+
+enum OrderStatus {
+  PENDING
+  CONFIRMED
+  PROCESSING
+  SHIPPED
+  DELIVERED
+  CANCELLED
+  REFUNDED
+}
+
+enum PaymentStatus {
+  UNPAID
+  PENDING
+  PAID
+  FAILED
+  REFUNDED
+  PARTIALLY_REFUNDED
+}
+
+// ─── Payment ──────────────────────────────────────────────────────────────────
+
+model Payment {
+  id           String        @id @default(cuid())
+  orderId      String        @unique
+  provider     String        @default("instapay")
+  amount       Decimal       @db.Decimal(10, 2)
+  currency     String        @default("EGP")
+  status       PaymentStatus @default(PENDING)
+  providerRef  String?
+  providerData Json?
+  webhookData  Json?
+  paidAt       DateTime?
+  refundedAt   DateTime?
+  refundAmount Decimal?      @db.Decimal(10, 2)
+
+  order Order @relation(fields: [orderId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([orderId])
+  @@index([providerRef])
+}
+
+// ─── Wishlist ────────────────────────────────────────────────────────────────
+
+model WishlistItem {
+  id        String  @id @default(cuid())
+  userId    String
+  productId String?
+  packageId String?
+
+  user    User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  product Product? @relation(fields: [productId], references: [id])
+  package Package? @relation(fields: [packageId], references: [id])
+
+  createdAt DateTime @default(now())
+
+  @@unique([userId, productId])
+  @@unique([userId, packageId])
+  @@index([userId])
+}
+
+// ─── Reviews ──────────────────────────────────────────────────────────────────
+
+model Review {
+  id         String  @id @default(cuid())
+  userId     String
+  productId  String?
+  packageId  String?
+  rating     Int
+  title      String?
+  body       String?
+  isApproved Boolean @default(false)
+
+  user    User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  product Product? @relation(fields: [productId], references: [id])
+  package Package? @relation(fields: [packageId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([productId])
+  @@index([packageId])
+  @@index([userId])
+}
+
+// ─── Marketing ────────────────────────────────────────────────────────────────
+
+model Coupon {
+  id          String     @id @default(cuid())
+  code        String     @unique
+  type        CouponType
+  value       Decimal    @db.Decimal(10, 2)
+  minOrder    Decimal?   @db.Decimal(10, 2)
+  maxDiscount Decimal?   @db.Decimal(10, 2)
+  usageLimit  Int?
+  usageCount  Int        @default(0)
+  isActive    Boolean    @default(true)
+  startsAt    DateTime?
+  expiresAt   DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([code])
+}
+
+enum CouponType {
+  PERCENTAGE
+  FIXED
+}
+
+model Banner {
+  id        String  @id @default(cuid())
+  title     String
+  subtitle  String?
+  image     String?
+  link      String?
+  isActive  Boolean @default(true)
+  sortOrder Int     @default(0)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model SiteSettings {
+  id          String  @id @default(cuid())
+  key         String  @unique
+  value       String
+  description String?
+
+  updatedAt DateTime @updatedAt
+}

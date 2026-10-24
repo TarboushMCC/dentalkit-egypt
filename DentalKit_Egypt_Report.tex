@@ -1,0 +1,906 @@
+%% ════════════════════════════════════════════════════════════════════════════
+%%  DentalKit Egypt — Project Description Report
+%%  Compile with: pdflatex  (Overleaf default engine)
+%% ════════════════════════════════════════════════════════════════════════════
+\documentclass[12pt, a4paper]{article}
+
+% ── Packages ─────────────────────────────────────────────────────────────────
+\usepackage[margin=2.5cm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{listings}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{tcolorbox}
+\usepackage{multicol}
+\usepackage{parskip}
+\usepackage{float}
+\usepackage{caption}
+\usepackage{amssymb}
+
+% ── Colour palette (matches DentalKit brand) ─────────────────────────────────
+\definecolor{dentalblue}{HTML}{0A2540}
+\definecolor{medcyan}{HTML}{00B4D8}
+\definecolor{warmwhite}{HTML}{FAFAF8}
+\definecolor{lightgray}{HTML}{F1F5F9}
+\definecolor{accentgreen}{HTML}{10B981}
+\definecolor{accentred}{HTML}{EF4444}
+\definecolor{codebg}{HTML}{1E293B}
+\definecolor{codetext}{HTML}{E2E8F0}
+
+% ── Hyperref setup ───────────────────────────────────────────────────────────
+\hypersetup{
+  colorlinks = true,
+  linkcolor  = dentalblue,
+  urlcolor   = medcyan,
+  citecolor  = medcyan,
+  pdftitle   = {DentalKit Egypt — Project Description},
+  pdfauthor  = {DentalKit Egypt Team},
+}
+
+% ── Header / Footer ──────────────────────────────────────────────────────────
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\color{dentalblue}\textbf{DentalKit Egypt}}
+\fancyhead[R]{\small\color{gray}Project Description Report}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+% ── Section styling ──────────────────────────────────────────────────────────
+\titleformat{\section}
+  {\Large\bfseries\color{dentalblue}}
+  {\thesection}{1em}{}[\color{medcyan}\titlerule]
+
+\titleformat{\subsection}
+  {\large\bfseries\color{dentalblue}}
+  {\thesubsection}{1em}{}
+
+\titleformat{\subsubsection}
+  {\normalsize\bfseries\color{dentalblue}}
+  {\thesubsubsection}{1em}{}
+
+% ── Code listing style ───────────────────────────────────────────────────────
+\lstdefinestyle{code}{
+  backgroundcolor = \color{codebg},
+  basicstyle      = \footnotesize\ttfamily\color{codetext},
+  breaklines      = true,
+  frame           = single,
+  framesep        = 4pt,
+  rulecolor       = \color{medcyan},
+  keywordstyle    = \color{medcyan}\bfseries,
+  stringstyle     = \color{accentgreen},
+  commentstyle    = \color{gray}\itshape,
+  numbers         = left,
+  numberstyle     = \tiny\color{gray},
+  stepnumber      = 1,
+  tabsize         = 2,
+}
+\lstset{style=code}
+
+% ── Coloured info boxes ───────────────────────────────────────────────────────
+\tcbuselibrary{skins, breakable}
+\newtcolorbox{infobox}[1]{
+  colback   = lightgray,
+  colframe  = medcyan,
+  coltitle  = white,
+  fonttitle = \bfseries,
+  title     = {#1},
+  arc       = 4pt,
+}
+\newtcolorbox{bluebox}[1]{
+  colback   = dentalblue!8,
+  colframe  = dentalblue,
+  coltitle  = white,
+  fonttitle = \bfseries,
+  title     = {#1},
+  arc       = 4pt,
+}
+
+% ── Images folder: put all screenshots in images/ subdirectory ───────────────
+
+% ─────────────────────────────────────────────────────────────────────────────
+\begin{document}
+
+% ══════════════════════════════════════════════════════════════════════════════
+%  TITLE PAGE
+% ══════════════════════════════════════════════════════════════════════════════
+\begin{titlepage}
+  \pagecolor{dentalblue}
+  \color{white}
+  \centering
+  \vspace*{3cm}
+
+  % Logo placeholder
+  \begin{tikzpicture}
+    \fill[medcyan]   (0,0) circle (1.8cm);
+    \node[white, font=\Huge\bfseries] at (0,0) {DK};
+  \end{tikzpicture}
+
+  \vspace{1cm}
+  {\fontsize{36}{44}\selectfont\bfseries DentalKit Egypt}\\[0.4cm]
+  {\Large\color{medcyan} Egypt's Dental Student Marketplace}\\[1.2cm]
+
+  {\Large Egypt's First Dental Student Marketplace}\\[0.4cm]
+  {\normalsize A full-stack e-commerce platform for university dental equipment packages}
+
+  \vspace{2cm}
+  \begin{tcolorbox}[
+    colback=white!10!dentalblue,
+    colframe=medcyan,
+    width=10cm,
+    arc=6pt,
+  ]
+    \centering\color{white}
+    \textbf{Technology Stack}\\[0.4cm]
+    Next.js 16 \quad|\quad TypeScript \quad|\quad PostgreSQL\\
+    Prisma ORM \quad|\quad NextAuth v5 \quad|\quad Tailwind CSS v4\\
+    Framer Motion \quad|\quad shadcn/ui
+  \end{tcolorbox}
+
+  \vfill
+  {\small\color{gray!60!white} Version 1.0 \quad|\quad 2025}
+\end{titlepage}
+\nopagecolor
+
+% ══════════════════════════════════════════════════════════════════════════════
+%  TABLE OF CONTENTS
+% ══════════════════════════════════════════════════════════════════════════════
+\newpage
+\tableofcontents
+\newpage
+
+% ══════════════════════════════════════════════════════════════════════════════
+\section{Project Overview}
+% ══════════════════════════════════════════════════════════════════════════════
+
+\textbf{DentalKit Egypt} is Egypt's first specialized e-commerce marketplace built exclusively for dental university students. The platform solves a recurring problem that dental students face every academic year: sourcing the exact equipment, instruments, and consumables required by their specific university for each academic year, bundled at the best price, from a single trusted source.
+
+\begin{infobox}{Platform at a Glance}
+\begin{tabular}{@{}ll@{}}
+\textbf{Platform Type}    & Full-stack marketplace (B2C, student-focused) \\
+\textbf{Market}           & Egyptian dental universities \\
+\textbf{Primary Currency} & Egyptian Pound (EGP) \\
+\textbf{Payment Methods}  & InstaPay, Cash on Delivery \\
+\textbf{Languages}        & Arabic + English (bilingual product catalogue) \\
+\end{tabular}
+\end{infobox}
+
+\subsection{Problem Statement}
+
+Each dental faculty in Egypt assigns a mandatory equipment list to students at the start of every academic year. Currently, students must:
+
+\begin{enumerate}[leftmargin=*]
+  \item Collect a handwritten or PDF list from the faculty office.
+  \item Shop individually from multiple specialized medical-supply vendors across Cairo and other governorates.
+  \item Compare prices, verify item quality, and handle logistics themselves.
+  \item Risk buying wrong items or missing a required instrument.
+\end{enumerate}
+
+This process wastes weeks of student time, is susceptible to price gouging, and offers no quality guarantee. DentalKit Egypt consolidates the entire process into a single online order.
+
+\subsection{Solution}
+
+DentalKit Egypt provides:
+
+\begin{itemize}[leftmargin=*]
+  \item \textbf{University-matched packages}: Pre-curated kits built against each university's official requirement list, per academic year.
+  \item \textbf{Individual product shop}: Students can also purchase standalone instruments or consumables.
+  \item \textbf{Transparent pricing}: Public compare prices and coupon discounts.
+  \item \textbf{Order tracking}: Real-time order status from confirmation to delivery.
+  \item \textbf{Wishlist}: Save items across sessions.
+  \item \textbf{Admin dashboard}: Full operations panel for managing inventory, orders, and universities.
+\end{itemize}
+
+% ══════════════════════════════════════════════════════════════════════════════
+\section{Technology Stack}
+% ══════════════════════════════════════════════════════════════════════════════
+
+\subsection{Frontend}
+
+\begin{tabularx}{\textwidth}{@{}lX@{}}
+\toprule
+\textbf{Technology} & \textbf{Role} \\
+\midrule
+Next.js 16.2.6      & React framework with App Router, Server Components, file-based routing \\
+React 19.2.4        & UI component library \\
+TypeScript 5        & Static type safety across the entire codebase \\
+Tailwind CSS v4     & Utility-first CSS with CSS-variable design tokens \\
+shadcn/ui           & Accessible, unstyled component primitives (Base UI) \\
+Framer Motion 12    & Page transitions, micro-interactions, scroll animations \\
+Lucide React        & Consistent icon set \\
+Sonner              & Toast notification system \\
+React Hook Form     & Performant form state management \\
+Zod v4              & Runtime schema validation for forms and API inputs \\
+next-themes         & System-aware dark/light mode support \\
+\bottomrule
+\end{tabularx}
+
+\subsection{Backend \& Database}
+
+\begin{tabularx}{\textwidth}{@{}lX@{}}
+\toprule
+\textbf{Technology} & \textbf{Role} \\
+\midrule
+Next.js Route Handlers & REST API endpoints (App Router \texttt{/api/} directory) \\
+NextAuth v5 (beta)  & Authentication: credentials + JWT sessions, role-based guards \\
+Prisma v7           & Type-safe ORM with migration runner \\
+PostgreSQL          & Primary relational database \\
+\texttt{@prisma/adapter-pg} & Native \texttt{pg} connection pool for Prisma \\
+bcryptjs            & Secure password hashing \\
+nanoid              & Collision-resistant order number generation \\
+date-fns            & Date formatting utilities \\
+\bottomrule
+\end{tabularx}
+
+\subsection{Design Tokens}
+
+The brand palette was chosen to evoke clinical professionalism and trust:
+
+\begin{center}
+\begin{tikzpicture}
+  % Colour swatches
+  \fill[dentalblue]  (0,0)   rectangle (3,1);
+  \fill[medcyan]     (3.2,0) rectangle (6.2,1);
+  \fill[accentgreen] (6.4,0) rectangle (9.4,1);
+  \fill[lightgray]   (9.6,0) rectangle (12.6,1);
+  \draw[gray!40] (9.6,0) rectangle (12.6,1);
+  % Labels
+  \node[white,  font=\footnotesize\bfseries, align=center] at (1.5, 0.65)  {Deep Dental Blue};
+  \node[white,  font=\tiny,                 align=center] at (1.5, 0.25)  {\#0A2540};
+  \node[white,  font=\footnotesize\bfseries, align=center] at (4.7, 0.65)  {Medical Cyan};
+  \node[white,  font=\tiny,                 align=center] at (4.7, 0.25)  {\#00B4D8};
+  \node[white,  font=\footnotesize\bfseries, align=center] at (7.9, 0.65)  {Success Green};
+  \node[white,  font=\tiny,                 align=center] at (7.9, 0.25)  {\#10B981};
+  \node[dentalblue, font=\footnotesize\bfseries, align=center] at (11.1, 0.65) {Warm White};
+  \node[dentalblue, font=\tiny,                  align=center] at (11.1, 0.25) {\#FAFAF8};
+\end{tikzpicture}
+\end{center}
+
+\textbf{Typography}: Figtree (display and headings) paired with Noto Sans (body text), both loaded via \texttt{next/font/google} for zero layout-shift.
+
+% ══════════════════════════════════════════════════════════════════════════════
+\section{Application Architecture}
+% ══════════════════════════════════════════════════════════════════════════════
+
+\subsection{Directory Structure}
+
+The project follows Next.js App Router conventions with route groups for logical separation:
+
+\begin{lstlisting}[language=bash, caption={High-level directory tree}]
+src/
+  app/
+    (shop)/             # Public storefront (no auth required)
+      page.tsx          # Homepage
+      packages/         # Package listing + detail pages
+      products/         # Individual product shop
+      universities/     # University browser + year pages
+      cart/             # Shopping cart
+      find-kit/         # Kit finder wizard
+    (auth)/             # Authentication pages (no navbar/footer)
+      login/
+      register/
+    checkout/           # Protected: requires login
+    dashboard/          # Protected: student area
+      orders/
+      wishlist/
+      profile/
+    admin/              # Protected: ADMIN or SUPER_ADMIN only
+      orders/
+      packages/
+      universities/
+    api/                # REST API routes
+      auth/
+      cart/
+      coupons/
+      orders/
+      packages/
+      payments/
+      products/
+      universities/
+      wishlist/
+      admin/
+  components/
+    home/               # Homepage sections (Hero, HowItWorks, etc.)
+    layout/             # Navbar, Footer
+    ui/                 # shadcn/ui primitives
+    providers/          # SessionProvider wrapper
+    SEO/                # StructuredData JSON-LD
+  lib/
+    db.ts               # Prisma client singleton
+    utils.ts            # cn() and shared helpers
+  auth.ts               # Full NextAuth config (server-side)
+  auth.config.ts        # Edge-safe NextAuth config (used in proxy)
+  proxy.ts              # Next.js 16 middleware (replaces middleware.ts)
+prisma/
+  schema.prisma         # Full data model
+\end{lstlisting}
+
+\subsection{Route Architecture}
+
+\begin{infobox}{Route Groups}
+Next.js route groups (\texttt{(shop)}, \texttt{(auth)}) share layouts without affecting URLs. The storefront layout wraps pages with a full Navbar and Footer; the auth group uses a minimal centered layout; the checkout and dashboard routes are fully protected by \texttt{src/proxy.ts}.
+\end{infobox}
+
+\subsection{Authentication Architecture}
+
+DentalKit Egypt uses \textbf{NextAuth v5} with a split-config pattern required by Next.js 16:
+
+\begin{itemize}[leftmargin=*]
+  \item \textbf{\texttt{auth.config.ts}} — Edge-safe config: no Prisma imports. Contains the \texttt{authorized} callback that drives route protection in the proxy, and the \texttt{session} callback that maps \texttt{token.role} onto \texttt{session.user.role}.
+  \item \textbf{\texttt{auth.ts}} — Full server config: imports Prisma adapter, defines the credentials provider, and the JWT session callbacks.
+  \item \textbf{\texttt{src/proxy.ts}} — Next.js 16's replacement for \texttt{middleware.ts}. Runs \texttt{NextAuth(authConfig)} and exports the matcher config.
+\end{itemize}
+
+Three role levels exist:
+
+\begin{center}
+\begin{tabular}{@{}lll@{}}
+\toprule
+\textbf{Role}         & \textbf{Access}              & \textbf{Redirect on login} \\
+\midrule
+\texttt{STUDENT}      & Shop + Dashboard             & \texttt{/dashboard} \\
+\texttt{ADMIN}        & Shop + Dashboard + Admin     & \texttt{/admin} \\
+\texttt{SUPER\_ADMIN} & Full platform access         & \texttt{/admin} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+% ══════════════════════════════════════════════════════════════════════════════
+\section{Database Schema}
+% ══════════════════════════════════════════════════════════════════════════════
+
+The PostgreSQL schema is managed by Prisma and contains 17 models organized into five logical groups:
+
+\subsection{Entity Groups}
+
+\subsubsection{Authentication (NextAuth)}
+\texttt{User}, \texttt{Account}, \texttt{Session}, \texttt{VerificationToken} — standard NextAuth tables. The \texttt{User} model is extended with a \texttt{role} enum (\texttt{STUDENT / ADMIN / SUPER\_ADMIN}), a \texttt{password} field for credentials auth, and a \texttt{studentProfile} relation.
+
+\subsubsection{Academic Structure}
+\begin{itemize}[leftmargin=*]
+  \item \textbf{University} — Egyptian dental faculties with bilingual names (\texttt{name}/\texttt{nameAr}), slugs, logo URLs, and sort order. Linked to \texttt{AcademicYear} and \texttt{Package}.
+  \item \textbf{AcademicYear} — Year levels (First Year through Fifth Year) per university, each with a slug used in the URL (\texttt{/universities/cairo-uni/first-year}).
+  \item \textbf{StudentProfile} — Optional profile record linking a student to their university and year, plus phone, address, and governorate for shipping pre-fill.
+\end{itemize}
+
+\subsubsection{Product Catalogue}
+\begin{itemize}[leftmargin=*]
+  \item \textbf{Category} — Hierarchical product grouping (instruments, consumables, lab equipment, etc.).
+  \item \textbf{Product} — Individual items with SKU, bilingual name/description, price, compare price, stock level with low-stock alert, image array, and tags.
+  \item \textbf{Package} — A curated bundle tied to a specific \texttt{University} + \texttt{AcademicYear}. Contains \texttt{isRequired} flag. Items are defined via \texttt{PackageItem} (join table with quantity).
+\end{itemize}
+
+\subsubsection{Commerce}
+\begin{itemize}[leftmargin=*]
+  \item \textbf{CartItem} — Polymorphic: can hold either a \texttt{productId} or a \texttt{packageId}.
+  \item \textbf{Order} / \textbf{OrderItem} / \textbf{OrderStatusLog} — Full order lifecycle with shipping address fields, coupon code, discount, shipping cost, and a status log for audit trail.
+  \item \textbf{Payment} — Linked 1:1 to an order. Stores provider (\texttt{instapay}), reference number, raw webhook JSON, and refund fields.
+  \item \textbf{WishlistItem} — Polymorphic like CartItem.
+  \item \textbf{Review} — Moderated rating + text review, attachable to product or package.
+\end{itemize}
+
+\subsubsection{Marketing}
+\begin{itemize}[leftmargin=*]
+  \item \textbf{Coupon} — Percentage or fixed-amount codes with usage limits, minimum order threshold, maximum discount cap, and validity window.
+  \item \textbf{Banner} — Homepage promotional banners.
+  \item \textbf{SiteSettings} — Key-value store for runtime configuration.
+\end{itemize}
+
+\subsection{Order Lifecycle Enums}
+
+\begin{multicols}{2}
+\textbf{OrderStatus}
+\begin{itemize}[noitemsep]
+  \item \texttt{PENDING}
+  \item \texttt{CONFIRMED}
+  \item \texttt{PROCESSING}
+  \item \texttt{SHIPPED}
+  \item \texttt{DELIVERED}
+  \item \texttt{CANCELLED}
+  \item \texttt{REFUNDED}
+\end{itemize}
+
+\columnbreak
+
+\textbf{PaymentStatus}
+\begin{itemize}[noitemsep]
+  \item \texttt{UNPAID}
+  \item \texttt{PENDING}
+  \item \texttt{PAID}
+  \item \texttt{FAILED}
+  \item \texttt{REFUNDED}
+  \item \texttt{PARTIALLY\_REFUNDED}
+\end{itemize}
+\end{multicols}
+
+% ══════════════════════════════════════════════════════════════════════════════
+\section{Pages \& User Interface}
+% ══════════════════════════════════════════════════════════════════════════════
+
+\subsection{Homepage}
+
+The homepage is a long-form marketing and discovery page composed of six independently animated sections:
+
+\begin{enumerate}[leftmargin=*]
+  \item \textbf{HeroSection} — Full-width hero with headline, CTA buttons ("Find My Kit" and "Browse Packages"), and an animated statistics bar showing package count, university count, and student count.
+  \item \textbf{HowItWorks} — Three-step process illustration (Select University → Choose Package → Delivered to Door).
+  \item \textbf{FeaturedUniversities} — Horizontal scrollable card row of featured universities fetched from the database.
+  \item \textbf{PopularPackages} — Grid of top packages with price, university badge, and an Add to Cart button.
+  \item \textbf{Testimonials} — Student review carousel.
+  \item \textbf{FAQSection} — Accordion FAQ with common questions.
+\end{enumerate}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.86\linewidth]{images/home-hero.jpg}
+\caption{Homepage hero section with headline, CTA buttons, and animated statistics bar.}
+\label{fig:home-hero}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.86\linewidth]{images/home-sections.jpg}
+\caption{Homepage scrollable sections: Featured Universities row and Popular Packages grid.}
+\label{fig:home-sections}
+\end{figure}
+
+\subsection{Universities Browser}
+
+Route: \texttt{/universities}
+
+Fetches all active universities from \texttt{/api/universities}. Displays a searchable grid of university cards showing:
+\begin{itemize}[noitemsep]
+  \item University logo, full name (English + Arabic)
+  \item Number of available packages
+  \item Number of enrolled students
+  \item Link to the university's package page
+\end{itemize}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.86\linewidth]{images/universities-list.jpg}
+\caption{Universities browser showing the searchable grid of all active dental faculties.}
+\label{fig:universities-list}
+\end{figure}
+
+\subsubsection{University Detail Page}
+
+Route: \texttt{/universities/[slug]}
+
+Loads a specific university and lists all academic-year package groups. Year filter buttons at the top allow filtering to a specific year (e.g.\ "First Year", "Second Year"). Each package card shows price, compare price, item count, and "Add to Cart" / "View Package" actions.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.86\linewidth]{images/university-detail.jpg}
+\caption{University detail page with academic year filter buttons and package cards per year.}
+\label{fig:university-detail}
+\end{figure}
+
+\subsection{Packages}
+
+Route: \texttt{/packages}
+
+Full package catalogue with a left-hand filter sidebar (university filter, year filter, price range). Packages are fetched from \texttt{/api/packages} with query parameters. Each card has an \texttt{e.stopPropagation()} guarded "Add to Cart" button so clicking the card navigates to the detail page while clicking the button adds without navigation.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.86\linewidth]{images/packages-list.jpg}
+\caption{Package catalogue with left-hand filter sidebar (university, year, price) and package grid.}
+\label{fig:packages-list}
+\end{figure}
+
+\subsubsection{Package Detail Page}
+
+Route: \texttt{/packages/[slug]}
+
+The most feature-rich public page:
+\begin{itemize}[leftmargin=*]
+  \item Product image gallery
+  \item Package name, university badge, year badge
+  \item Price and compare price with discount percentage
+  \item Package contents table (item name, quantity, individual price)
+  \item Three primary actions:
+    \begin{itemize}[noitemsep]
+      \item \textbf{Add to Cart} — POST to \texttt{/api/cart}
+      \item \textbf{Buy Now} — Add to cart then navigate to \texttt{/checkout}
+      \item \textbf{Wishlist} (heart icon) — POST/DELETE \texttt{/api/wishlist}, state persists on reload
+    \end{itemize}
+  \item Related packages section
+\end{itemize}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.86\linewidth]{images/package-detail.jpg}
+\caption{Package detail page showing the image gallery, contents table, and Add to Cart / Buy Now / Wishlist buttons.}
+\label{fig:package-detail}
+\end{figure}
+
+\subsection{Products Shop}
+
+Route: \texttt{/products}
+
+Individual product catalogue for students who need to replace a single instrument rather than purchasing a full kit. Features:
+\begin{itemize}[noitemsep]
+  \item Full-text search (passed as \texttt{?search=} query param)
+  \item Category filter sidebar
+  \item Price display with compare price strikethrough
+  \item Add to Cart per product card
+\end{itemize}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.86\linewidth]{images/products-shop.jpg}
+\caption{Individual products shop with full-text search, category filters, and price display.}
+\label{fig:products-shop}
+\end{figure}
+
+\subsection{Shopping Cart}
+
+Route: \texttt{/cart}
+
+\begin{itemize}[leftmargin=*]
+  \item Lists all cart items (packages and/or products) from \texttt{/api/cart}
+  \item Quantity controls: \texttt{+} and \texttt{-} buttons PATCH the quantity via \texttt{/api/cart?id=\{id\}}
+  \item Remove item: DELETE request, item removed optimistically from UI
+  \item Coupon code input: validates against \texttt{/api/coupons/validate}, shows discount amount
+  \item Order summary panel: subtotal, discount, shipping estimate, total in EGP
+  \item "Proceed to Checkout" button navigates to \texttt{/checkout}
+\end{itemize}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.86\linewidth]{images/cart.jpg}
+\caption{Shopping cart with quantity controls, coupon code input, and order summary panel.}
+\label{fig:cart}
+\end{figure}
+
+\subsection{Checkout}
+
+Route: \texttt{/checkout} (protected — requires login)
+
+A single-page checkout flow:
+\begin{enumerate}[leftmargin=*]
+  \item \textbf{Shipping form} — Name, phone, address, city, governorate. Pre-filled from \texttt{StudentProfile} if available.
+  \item \textbf{Order summary} — Cart items, quantities, subtotal.
+  \item \textbf{Coupon input} — Re-validates coupon and applies discount.
+  \item \textbf{Payment method} — Toggle between InstaPay and Cash on Delivery. InstaPay shows QR code and reference input.
+  \item \textbf{Place Order} — POST to \texttt{/api/orders}, clears cart, redirects to \texttt{/dashboard/orders}.
+\end{enumerate}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.86\linewidth]{images/checkout.jpg}
+\caption{Checkout page with shipping address form, payment method selection (InstaPay / COD), and order placement.}
+\label{fig:checkout}
+\end{figure}
+
+\subsection{Find My Kit}
+
+Route: \texttt{/find-kit}
+
+A guided wizard that helps students who are unsure which package applies to them:
+\begin{enumerate}[noitemsep]
+  \item Select your university (searchable dropdown)
+  \item Select your academic year
+  \item View matched packages
+\end{enumerate}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.86\linewidth]{images/find-kit.jpg}
+\caption{Find My Kit wizard guiding students through university and year selection to reach matched packages.}
+\label{fig:find-kit}
+\end{figure}
+
+% ── Auth Pages ────────────────────────────────────────────────────────────────
+\subsection{Authentication Pages}
+
+Both auth pages use a minimal centered layout (no Navbar/Footer).
+
+\subsubsection{Login — \texttt{/login}}
+
+Email + password form using React Hook Form and Zod validation. On successful sign-in, reads \texttt{session.user.role} via \texttt{getSession()} and redirects to \texttt{/admin} for admin roles, \texttt{/dashboard} for students. Supports \texttt{callbackUrl} query param for deep-link preservation.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.86\linewidth]{images/login.jpg}
+\caption{Login page with branded form, email and password fields, and role-based redirect on success.}
+\label{fig:login}
+\end{figure}
+
+\subsubsection{Register — \texttt{/register}}
+
+Registration form: full name, email, password, and confirm password. Creates a new student account upon submission.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.86\linewidth]{images/register.jpg}
+\caption{Registration page for new students with name, email, password, and confirm password fields.}
+\label{fig:register}
+\end{figure}
+
+% ── Student Dashboard ─────────────────────────────────────────────────────────
+\subsection{Student Dashboard}
+
+Route prefix: \texttt{/dashboard} (all sub-routes protected by proxy)
+
+The dashboard uses a persistent sidebar layout with the student's name and avatar from the NextAuth session.
+
+\subsubsection{Dashboard Home — \texttt{/dashboard}}
+
+KPI cards:
+\begin{itemize}[noitemsep]
+  \item Total orders placed (count from \texttt{/api/orders})
+  \item Wishlist items count
+  \item Total amount spent
+  \item Pending orders count
+\end{itemize}
+Recent orders table below the KPI cards.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.86\linewidth]{images/dashboard-home.jpg}
+\caption{Student dashboard home showing KPI cards (orders, wishlist, total spent) and recent orders table.}
+\label{fig:dashboard-home}
+\end{figure}
+
+\subsubsection{Orders — \texttt{/dashboard/orders}}
+
+Full order history with:
+\begin{itemize}[noitemsep]
+  \item Order number, date, total
+  \item Status badge (color-coded: pending = yellow, delivered = green, cancelled = red)
+  \item Expandable order items list
+\end{itemize}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.86\linewidth]{images/dashboard-orders.jpg}
+\caption{Order history page with order numbers, dates, totals, and colour-coded status badges.}
+\label{fig:dashboard-orders}
+\end{figure}
+
+\subsubsection{Wishlist — \texttt{/dashboard/wishlist}}
+
+Grid of saved items fetched from \texttt{/api/wishlist}. Each card has:
+\begin{itemize}[noitemsep]
+  \item Remove from Wishlist (DELETE \texttt{/api/wishlist})
+  \item Add to Cart (POST \texttt{/api/cart})
+\end{itemize}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.86\linewidth]{images/dashboard-wishlist.jpg}
+\caption{Wishlist page displaying saved packages with Remove and Add to Cart actions per item.}
+\label{fig:dashboard-wishlist}
+\end{figure}
+
+\subsubsection{Profile — \texttt{/dashboard/profile}}
+
+Edit display name. PATCH to \texttt{/api/auth/profile}, followed by NextAuth's \texttt{update()} to refresh the session token without re-login.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.86\linewidth]{images/dashboard-profile.jpg}
+\caption{Student profile page with editable display name and session refresh on save.}
+\label{fig:dashboard-profile}
+\end{figure}
+
+% ── Admin Panel ───────────────────────────────────────────────────────────────
+\subsection{Admin Panel}
+
+Route prefix: \texttt{/admin} — requires \texttt{ADMIN} or \texttt{SUPER\_ADMIN} role.
+
+The admin panel uses a dark sidebar layout distinct from the student dashboard.
+
+\subsubsection{Admin Home — \texttt{/admin}}
+
+Fetches real-time KPIs from \texttt{/api/admin/stats}:
+\begin{itemize}[noitemsep]
+  \item Total revenue (EGP), total orders, total users, total products
+  \item Revenue change percentage vs.\ previous period
+  \item Recent orders table with status management
+  \item Top Universities bar chart (orders per university)
+\end{itemize}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.86\linewidth]{images/admin-home.jpg}
+\caption{Admin dashboard with real-time KPIs, revenue trend, top universities bar chart, and recent orders.}
+\label{fig:admin-home}
+\end{figure}
+
+\subsubsection{Admin Orders — \texttt{/admin/orders}}
+
+Full paginated order management table with status update controls.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.86\linewidth]{images/admin-orders.jpg}
+\caption{Admin orders management table with status update controls and order details.}
+\label{fig:admin-orders}
+\end{figure}
+
+\subsubsection{Admin Packages — \texttt{/admin/packages}}
+
+Package management: list, create, edit, and deactivate packages.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.86\linewidth]{images/admin-packages.jpg}
+\caption{Admin packages management page for creating, editing, and deactivating package listings.}
+\label{fig:admin-packages}
+\end{figure}
+
+\subsubsection{Admin Universities — \texttt{/admin/universities}}
+
+University and academic year management.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.86\linewidth]{images/admin-universities.jpg}
+\caption{Admin universities page for managing dental faculties and their academic year structure.}
+\label{fig:admin-universities}
+\end{figure}
+
+% ══════════════════════════════════════════════════════════════════════════════
+\section{API Reference}
+% ══════════════════════════════════════════════════════════════════════════════
+
+All API routes live under \texttt{/api/} and return JSON. Authentication is checked via \texttt{auth()} from NextAuth inside each handler.
+
+\begin{longtable}{@{}p{5.5cm}lp{6.5cm}@{}}
+\toprule
+\textbf{Endpoint} & \textbf{Methods} & \textbf{Description} \\
+\midrule
+\endhead
+\texttt{/api/auth/register}        & POST          & Create new student account \\
+\texttt{/api/auth/profile}         & PATCH         & Update display name, refresh JWT \\
+\texttt{/api/auth/[...nextauth]}   & GET, POST     & NextAuth handler (session, CSRF, signout) \\
+\midrule
+\texttt{/api/universities}         & GET           & List active universities (filterable) \\
+\texttt{/api/universities/[id]}    & GET           & Single university + academic years \\
+\midrule
+\texttt{/api/packages}             & GET           & List packages (filter: university, year, search) \\
+\texttt{/api/packages/[slug]}      & GET           & Package detail + items + wishlist status \\
+\midrule
+\texttt{/api/products}             & GET           & Product catalogue (filter: category, search) \\
+\midrule
+\texttt{/api/cart}                 & GET           & Fetch authenticated user's cart \\
+                                   & POST          & Add item to cart \\
+                                   & PATCH         & Update item quantity \\
+                                   & DELETE        & Remove item from cart \\
+\midrule
+\texttt{/api/wishlist}             & GET           & Fetch wishlist items \\
+                                   & POST          & Add item to wishlist \\
+                                   & DELETE        & Remove item from wishlist \\
+\midrule
+\texttt{/api/orders}               & GET           & List orders for authenticated user \\
+                                   & POST          & Place new order (clears cart) \\
+\texttt{/api/orders/[id]}          & GET           & Single order detail \\
+\midrule
+\texttt{/api/coupons/validate}     & POST          & Validate coupon code + return discount \\
+\midrule
+\texttt{/api/payments/instapay}    & POST          & Create InstaPay payment intent \\
+\texttt{/api/payments/instapay/webhook} & POST     & Receive InstaPay webhook + update order \\
+\midrule
+\texttt{/api/admin/stats}          & GET           & Dashboard KPIs (admin only) \\
+\bottomrule
+\end{longtable}
+
+% ══════════════════════════════════════════════════════════════════════════════
+\section{Payment Integration}
+% ══════════════════════════════════════════════════════════════════════════════
+
+\subsection{InstaPay}
+
+InstaPay is Egypt's national instant payment network operated through local banks. DentalKit Egypt integrates it as the primary digital payment method:
+
+\begin{enumerate}[leftmargin=*]
+  \item Student selects "InstaPay" on the checkout page.
+  \item The checkout page calls \texttt{POST /api/payments/instapay} to create a payment record with status \texttt{PENDING}.
+  \item A QR code / InstaPay phone number is displayed.
+  \item Student completes the transfer from their banking app.
+  \item InstaPay sends a webhook to \texttt{/api/payments/instapay/webhook}.
+  \item The webhook handler verifies the payload, marks the \texttt{Payment} as \texttt{PAID}, and updates the \texttt{Order.paymentStatus} to \texttt{PAID}.
+\end{enumerate}
+
+\subsection{Cash on Delivery}
+
+For students outside digital payment coverage, Cash on Delivery (COD) is available. Orders placed with COD are created with \texttt{paymentStatus = UNPAID} and \texttt{paymentMethod = "cod"}. The admin manually marks payment received upon delivery.
+
+% ══════════════════════════════════════════════════════════════════════════════
+\section{SEO \& AI Discoverability}
+% ══════════════════════════════════════════════════════════════════════════════
+
+The platform is built with strong SEO and AI-crawler discoverability from the ground up:
+
+\begin{itemize}[leftmargin=*]
+  \item \textbf{\texttt{src/app/sitemap.ts}} — Dynamically generates XML sitemap including all university, year, and package URLs.
+  \item \textbf{\texttt{src/app/robots.ts}} — Crawler permission rules.
+  \item \textbf{\texttt{public/llms.txt}} — Summary file for AI language model indexers (per the \texttt{llms.txt} standard).
+  \item \textbf{\texttt{public/llms-full.txt}} — Full detailed content for AI crawlers.
+  \item \textbf{\texttt{src/components/SEO/StructuredData.tsx}} — Injects JSON-LD schemas: \texttt{Product}, \texttt{BreadcrumbList}, \texttt{Organization}, enabling rich snippets in Google Search.
+  \item All product and package pages include \texttt{generateMetadata()} for per-page Open Graph tags, meta descriptions, and canonical URLs.
+\end{itemize}
+
+% ══════════════════════════════════════════════════════════════════════════════
+\section{Animations \& UX}
+% ══════════════════════════════════════════════════════════════════════════════
+
+Framer Motion v12 is used throughout the storefront for a polished, clinical feel:
+
+\begin{itemize}[leftmargin=*]
+  \item \textbf{Page transitions} — Fade + slight Y-slide on route change via a shared layout wrapper.
+  \item \textbf{Stagger children} — University cards and package cards stagger-animate into view using \texttt{staggerChildren: 0.06}.
+  \item \textbf{Scroll-triggered} — Sections on the homepage animate in as the user scrolls using \texttt{whileInView}.
+  \item \textbf{Button feedback} — \texttt{whileTap: \{ scale: 0.96 \}} on primary CTAs.
+  \item \textbf{Cart badge} — Numeric badge on the Navbar cart icon animates with \texttt{AnimatePresence} when count changes.
+  \item All animation variants are defined in \texttt{src/lib/motion.ts} for consistent reuse.
+\end{itemize}
+
+% ══════════════════════════════════════════════════════════════════════════════
+\section{Feature Summary}
+% ══════════════════════════════════════════════════════════════════════════════
+
+\begin{bluebox}{Implemented Features}
+\begin{multicols}{2}
+\begin{itemize}[noitemsep, leftmargin=*]
+  \item[\checkmark] User registration + login
+  \item[\checkmark] Role-based access control (3 roles)
+  \item[\checkmark] JWT session persistence
+  \item[\checkmark] University browser (10 universities)
+  \item[\checkmark] Package catalogue + detail
+  \item[\checkmark] Individual product shop
+  \item[\checkmark] Add to Cart (product + package)
+  \item[\checkmark] Cart quantity management
+  \item[\checkmark] Coupon validation + discount
+  \item[\checkmark] Checkout with shipping form
+  \item[\checkmark] InstaPay integration
+  \item[\checkmark] Cash on Delivery
+  \item[\checkmark] Order placement + confirmation
+  \item[\checkmark] Order history with status
+  \item[\checkmark] Wishlist (save/remove/move to cart)
+  \item[\checkmark] Student profile editing
+  \item[\checkmark] Admin KPI dashboard
+  \item[\checkmark] Admin order management
+  \item[\checkmark] Admin package management
+  \item[\checkmark] Admin university management
+  \item[\checkmark] Real-time cart badge in Navbar
+  \item[\checkmark] Fully animated UI (Framer Motion)
+  \item[\checkmark] SEO + JSON-LD structured data
+  \item[\checkmark] LLMs.txt AI discoverability
+  \item[\checkmark] Dynamic sitemap
+  \item[\checkmark] Bilingual product catalogue (AR/EN)
+  \item[\checkmark] Find My Kit wizard
+\end{itemize}
+\end{multicols}
+\end{bluebox}
+
+% ══════════════════════════════════════════════════════════════════════════════
+\section{Conclusion}
+% ══════════════════════════════════════════════════════════════════════════════
+
+DentalKit Egypt is a production-grade, full-stack marketplace purpose-built for the Egyptian dental education market. It addresses a genuine gap in the student supply chain with a modern, performant web application that covers the complete user journey from discovery through checkout.
+
+The codebase uses current best practices: Next.js 16 App Router for server-first rendering, Prisma v7 with a typed PostgreSQL schema for data integrity, NextAuth v5 for secure role-based sessions, and a polished Framer Motion-animated UI.
+
+\vfill
+\begin{center}
+\small\color{gray}
+DentalKit Egypt \textperiodcentered{} Project Description Report \textperiodcentered{} 2025 \\
+Built with Next.js, TypeScript, and PostgreSQL
+\end{center}
+
+\end{document}

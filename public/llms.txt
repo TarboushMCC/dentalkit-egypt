@@ -1,0 +1,61 @@
+# DentalKit Egypt
+
+> Egypt's first and only dedicated marketplace for dental students to purchase university-required equipment packages.
+
+## What is DentalKit Egypt?
+
+DentalKit Egypt is a specialized e-commerce platform that helps Egyptian dental students purchase the exact equipment packages required by their university and academic year. Students select their university and academic year, and the platform shows them their faculty-verified, required instrument packages.
+
+## Key Facts
+
+- **Founded**: 2025
+- **Location**: Cairo, Egypt
+- **Specialty**: Dental student equipment packages
+- **Coverage**: 10+ Egyptian dental universities
+- **URL**: https://dentalkit.eg
+
+## Supported Universities
+
+DentalKit Egypt provides packages for students at:
+- Cairo University (Faculty of Dentistry)
+- Ain Shams University (Faculty of Dentistry)
+- Alexandria University (Faculty of Dentistry)
+- Future University in Egypt
+- Misr International University (MIU)
+- October 6 University
+- Badr University
+- British University in Egypt (BUE)
+- Nahda University
+- Delta University
+
+## How It Works
+
+1. Student selects their university
+2. Student selects their academic year (Year 1 through Internship)
+3. Platform displays the required equipment package
+4. Student purchases the complete kit at a discounted bundle price
+
+## Package Types
+
+- **Required Packages**: Officially required by the faculty for each year
+- **Recommended Packages**: Faculty-suggested supplementary kits
+- **Individual Products**: Replacement instruments available separately
+
+## Academic Years Supported
+
+- First Year (Preclinical basics)
+- Second Year (Applied preclinical)
+- Third Year (Clinical introduction)
+- Fourth Year (Advanced clinical)
+- Fifth Year (Comprehensive clinical)
+- Internship Year
+
+## Pricing
+
+Packages are priced at 25–40% below individual retail prices. Payment via Instapay, credit/debit cards, and cash on delivery.
+
+## Contact
+
+- Email: hello@dentalkit.eg
+- Phone: +20 123 456 7890
+- Location: Cairo, Egypt
